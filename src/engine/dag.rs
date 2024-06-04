@@ -3,6 +3,7 @@ use crate::{
     task::{ExecState, Input, Task},
     utils::EnvVar,
     Action, Parser,
+    Output,
 };
 use log::{debug, error};
 use std::{
@@ -461,6 +462,17 @@ impl Dag {
                     None => None,
                 };
                 (id, output)
+            })
+            .collect();
+        hm
+    }
+    pub fn get_outputs<T: Send + Sync + 'static>(&self) -> HashMap<usize, Output> {
+        let hm = self
+            .execute_states
+            .iter()
+            .map(|(&id, state)| {
+                let t = state.get_full_output();
+                (id, t)
             })
             .collect();
         hm
