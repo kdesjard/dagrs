@@ -52,7 +52,7 @@ pub struct Dag {
     ///
     /// Arc but no mutex, because only one thread will change [`TaskWrapper`]at a time.
     /// And no modification to [`TaskWrapper`] happens during the execution of it.
-    tasks: HashMap<usize, Box<dyn Task>>,
+    pub tasks: HashMap<usize, Box<dyn Task>>,
     /// Store dependency relations.
     rely_graph: Graph,
     /// Store a task's running result.Execution results will be read and written asynchronously by several threads.
