@@ -63,10 +63,10 @@ impl Complex for CommandAction {
                 out.split_terminator('\n').map(str::to_string).collect()
             }
         };
-        let output = Content::new((stdout, stderr));
         if out.status.success() {
-            Output::new(output)
+            Output::new((stdout,stderr))
         } else {
+            let output = Content::new((stdout, stderr));
             Output::error_with_exit_code(Some(code), Some(output))
         }
     }
