@@ -354,6 +354,7 @@ impl Dag {
                                 task_id,
                                 out.get_err().unwrap_or("".to_string())
                             );
+                            execute_state.set_output(out);
                             false
                         } else {
                             execute_state.set_output(out);
