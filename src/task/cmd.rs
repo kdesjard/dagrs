@@ -37,8 +37,8 @@ impl Complex for CommandAction {
         });
 
         log::debug!("cmd: {:?}, args: {:?}", cmd.get_program(), args);
-        let (code, out) = match cmd.args(args).output() {
-            Ok(o) => (0, o),
+        let out = match cmd.args(args).output() {
+            Ok(o) => o,
             Err(e) => {
                 return Output::error_with_exit_code(
                     e.raw_os_error(),
@@ -46,6 +46,7 @@ impl Complex for CommandAction {
                 )
             }
         };
+        let code = out.status.code().unwrap_or(0);
         let stdout: Vec<String> = {
             let out = String::from_utf8(out.stdout).unwrap_or("".to_string());
             if cfg!(target_os = "windows") {
