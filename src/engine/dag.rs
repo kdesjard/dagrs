@@ -373,6 +373,7 @@ impl Dag {
                                 "Execution failed [name: {}, id: {}]\nerr: {}",
                                 task_name, task_id, error
                             );
+                            execute_state.set_output(out);
                             Err(DagError::TaskError(error))
                         } else {
                             execute_state.set_output(out);
