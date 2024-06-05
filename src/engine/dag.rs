@@ -454,7 +454,7 @@ impl Dag {
 
     /// Get the output of all tasks.
     pub fn get_results<T: Send + Sync + 'static>(&self) -> HashMap<usize, Option<Arc<T>>> {
-        let hm = self
+        self
             .execute_states
             .iter()
             .map(|(&id, state)| {
@@ -464,19 +464,17 @@ impl Dag {
                 };
                 (id, output)
             })
-            .collect();
-        hm
+            .collect()
     }
-    pub fn get_outputs<T: Send + Sync + 'static>(&self) -> HashMap<usize, Output> {
-        let hm = self
+    pub fn get_outputs(&self) -> HashMap<usize, Output> {
+        self
             .execute_states
             .iter()
             .map(|(&id, state)| {
                 let t = state.get_full_output();
                 (id, t)
             })
-            .collect();
-        hm
+            .collect()
     }
 
     /// Before the dag starts executing, set the dag's global environment variable.
